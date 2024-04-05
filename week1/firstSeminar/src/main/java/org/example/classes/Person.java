@@ -19,6 +19,10 @@ public class Person {
         this.sex = sex;
     }
 
+    public Person(String name, int age) {
+        this(name, age, "unknown");
+    }
+
     public String getName() {
         return this.name;
     }
@@ -29,19 +33,5 @@ public class Person {
 
     public static Person create(String name, int age, String sex) {
         return new Person(name, age, sex);
-    }
-
-    Person personWithFactoryMethod = Person.create("김채원", 23, "female");
-
-    Person personWithBuilder = new
-            PersonBuilder()
-            .name("김채원")
-            .age(24)
-            .sex("female")
-            .build();
-
-
-    public Person(String name, int age) {
-        this(name, age, "unknown");
     }
 }
