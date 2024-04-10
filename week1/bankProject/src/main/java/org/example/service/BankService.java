@@ -6,6 +6,9 @@ import org.example.classes.Bank;
 import org.example.classes.Customer;
 import org.example.exception.*;
 
+import java.util.List;
+import java.util.Random;
+
 public class BankService {
     private Bank bank;
 
@@ -13,14 +16,43 @@ public class BankService {
         this.bank = bank;
     }
 
-    // 계좌 생성 로직
-    public Account createAccount(String customerName, String phoneNumber) throws DuplicateCustomerException {
-        return bank.createAccount(customerName, phoneNumber);
+    //계좌번호 생성
+    public String generateAccountNumber() {
+        Random random = new Random();
+        StringBuilder accountNumber = new StringBuilder();
+        for (int i = 0; i < 13; i++) {
+            int number = random.nextInt(10);
+            accountNumber.append(number);
+        }
+        return accountNumber.toString();
     }
 
-    // 고객 정보 조회 로직
-    public Customer printCustomerInfo(String accountNumber) throws CustomerNotFoundException {
-        return bank.findCustomerByAccountNumber(accountNumber);
+    // 계좌 생성 로직
+    public Account createAccount(String customerName, String phoneNumber) throws DuplicateCustomerException, CustomerNotFoundException {
+        Customer customer = bank.findCustomerByPhoneNumber(phoneNumber);
+        if (customer != null && !customer.getName().equals(customerName)) {
+            throw new DuplicateCustomerException("이미 다른 이름으로 등록되었습니다.");
+        }
+        if (customer == null) { //새 고객 생성
+            customer = new Customer(customerName, phoneNumber);
+            bank.addCustomer(customer);
+        }
+        Account account = new Account(generateAccountNumber());
+        bank.addAccount(account);
+        customer.addAccount(account);
+        return account;
+    }
+
+    //고객 정보 조회 로직
+    public Customer printCustomerInfo(String accountNumber) throws CustomerNotFoundException, AccountNotFoundException {
+        Account account = bank.findAccount(accountNumber);
+        for (Customer customer : bank.getCustomers()) {
+            List<Account> accounts = customer.getAccounts();
+            if (accounts.contains(account)) {
+                return customer;
+            }
+        }
+        throw new CustomerNotFoundException("고객을 찾을 수 없습니다.");
     }
 
     // 잔액 조회 로직

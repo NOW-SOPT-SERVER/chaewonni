@@ -59,7 +59,7 @@ public class BankView {
             String phoneNumber = scanner.nextLine();
             Account account = bankService.createAccount(name, phoneNumber); //계좌 생성
             System.out.println("계좌 생성 완료, 계좌 번호: " + account.getAccountNum());
-        } catch (DuplicateCustomerException e) {
+        } catch (DuplicateCustomerException | CustomerNotFoundException e) {
             System.out.println("계좌 생성 실패: " + e.getMessage());
         }
     }
@@ -74,7 +74,7 @@ public class BankView {
             System.out.println("계좌 번호 " + accountNum + "의 고객 정보\n" +
                     "고객 이름: " + customer.getName() + "\n" +
                     "고객 전화번호: " + customer.getPhoneNumber());
-        } catch (CustomerNotFoundException e) {
+        } catch (CustomerNotFoundException | AccountNotFoundException e) {
             System.out.println("고객 정보 조회 실패: " + e.getMessage());
         }
     }
