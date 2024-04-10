@@ -57,7 +57,7 @@ public class BankView {
             String name = scanner.nextLine();
             System.out.print("전화번호를 입력하세요: ");
             String phoneNumber = scanner.nextLine();
-            Account account = bankService.createAccount(name, phoneNumber);
+            Account account = bankService.createAccount(name, phoneNumber); //계좌 생성
             System.out.println("계좌 생성 완료, 계좌 번호: " + account.getAccountNum());
         } catch (DuplicateCustomerException e) {
             System.out.println("계좌 생성 실패: " + e.getMessage());
@@ -70,7 +70,7 @@ public class BankView {
             System.out.print("계좌 번호를 입력하세요: ");
             String accountNum = scanner.nextLine();
 
-            Customer customer = bankService.printCustomerInfo(accountNum);
+            Customer customer = bankService.printCustomerInfo(accountNum); //고객 정보 조회
             System.out.println("계좌 번호 " + accountNum + "의 고객 정보\n" +
                     "고객 이름: " + customer.getName() + "\n" +
                     "고객 전화번호: " + customer.getPhoneNumber());
@@ -84,7 +84,7 @@ public class BankView {
             System.out.println("\n잔액 조회하기");
             System.out.print("잔액을 조회할 계좌 번호를 입력하세요: ");
             String accountNum = scanner.nextLine();
-            double balance = bankService.checkBalance(accountNum);
+            double balance = bankService.checkBalance(accountNum); //잔액 조회
             System.out.println(accountNum + "의 잔액은 " + balance + "원 입니다.");
         } catch (AccountNotFoundException e) {
             System.out.println("잔액 조회 실패: " + e.getMessage());
@@ -98,7 +98,7 @@ public class BankView {
             String accountNum = scanner.nextLine();
             System.out.print("입금할 금액을 입력하세요: ");
             double amount = scanner.nextDouble();
-            bankService.deposit(accountNum, amount);
+            bankService.deposit(accountNum, amount); //입금
             System.out.println(amount + "원 입금 완료");
         } catch (InvalidAmountException | AccountNotFoundException e) {
             System.out.println("입금 실패: " + e.getMessage());
@@ -112,7 +112,7 @@ public class BankView {
             String accountNum = scanner.nextLine();
             System.out.print("출금할 금액을 입력하세요: ");
             double amount = scanner.nextDouble();
-            bankService.withdraw(accountNum, amount);
+            bankService.withdraw(accountNum, amount); //출금
             System.out.println(amount + "원 출금 완료");
         } catch (InvalidAmountException | InsufficientFundsException | AccountNotFoundException e) {
             System.out.println("출금 실패: " + e.getMessage());
@@ -128,7 +128,7 @@ public class BankView {
             String toAccountNum = scanner.nextLine();
             System.out.print("이체할 금액을 입력하세요: ");
             double amount = scanner.nextDouble();
-            bankService.transfer(fromAccountNum, toAccountNum, amount);
+            bankService.transfer(fromAccountNum, toAccountNum, amount); //이체
             System.out.println("이체 성공: " + amount + "원이 " + fromAccountNum + "에서 " + toAccountNum + "으로 이체되었습니다.");
         } catch (InvalidAmountException | InsufficientFundsException | AccountNotFoundException e) {
             System.out.println("이체 실패: " + e.getMessage());
