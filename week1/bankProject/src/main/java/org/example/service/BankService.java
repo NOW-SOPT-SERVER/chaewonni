@@ -37,22 +37,18 @@ public class BankService {
             customer = new Customer(customerName, phoneNumber);
             bank.addCustomer(customer);
         }
-        Account account = new Account(generateAccountNumber());
+        Account account = new Account(generateAccountNumber(), customer);
         bank.addAccount(account);
-        customer.addAccount(account);
         return account;
     }
 
     //고객 정보 조회 로직
     public Customer printCustomerInfo(String accountNumber) throws CustomerNotFoundException, AccountNotFoundException {
         Account account = bank.findAccount(accountNumber);
-        for (Customer customer : bank.getCustomers()) {
-            List<Account> accounts = customer.getAccounts();
-            if (accounts.contains(account)) {
-                return customer;
-            }
+        if (account == null) {
+            throw new AccountNotFoundException("계좌를 찾을 수 없습니다.");
         }
-        throw new CustomerNotFoundException("고객을 찾을 수 없습니다.");
+        return account.getOwner();
     }
 
     // 잔액 조회 로직

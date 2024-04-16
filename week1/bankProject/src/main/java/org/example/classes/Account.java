@@ -6,10 +6,12 @@ import org.example.exception.InvalidAmountException;
 public class Account {
     private String accountNum;
     private double balance;
+    private Customer owner;
 
-    public Account(String accountNum) {
+    public Account(String accountNum, Customer owner) {
         this.accountNum = accountNum;
         this.balance = 0;
+        this.owner = owner;
     }
 
     //입금
@@ -37,5 +39,9 @@ public class Account {
 
     public double getBalance() {
         return balance;
+    }
+
+    public Customer getOwner() {
+        return owner;
     }
 }

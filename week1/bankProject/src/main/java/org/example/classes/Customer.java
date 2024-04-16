@@ -7,16 +7,10 @@ import java.util.List;
 public class Customer {
     private String name;
     private String phoneNumber;
-    private List<Account> accounts;
 
     public Customer(String name, String phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
-        accounts = new ArrayList<>();
-    }
-
-    public void addAccount(Account account) {
-        accounts.add(account);
     }
 
     public String getName() {
@@ -25,9 +19,5 @@ public class Customer {
 
     public String getPhoneNumber() {
         return phoneNumber;
-    }
-
-    public List<Account> getAccounts() {
-        return accounts;
     }
 }
