@@ -26,11 +26,11 @@ public class Item {
     private String title;
 
     @Column
-    private int price;
-
-    @Column
     @Enumerated(EnumType.STRING)
     private Method method; // 거래 방식
+
+    @Column
+    private int price;
 
     @Column
     @Size(min = 4, message = "최소 4글자 이상이어야 합니다.")
