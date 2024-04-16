@@ -23,11 +23,11 @@ public class Member {
     private double MannerTemperature;
 
     // 정적 팩토리 메서드
-    public static Member create(String nickname, String phoneNumber, double MannerTemperature) {
+    public static Member create(String nickname, String phoneNumber) {
         Member member = new Member();
         member.nickname = nickname;
         member.phoneNumber = phoneNumber;
-        member.MannerTemperature = MannerTemperature;
+        member.MannerTemperature = 36.5;
         return member;
     }
 }
