@@ -1,6 +1,7 @@
 package org.sopt.daangnMarket.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,10 +23,11 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
+    @NotBlank(message = "제목은 필수입니다.")
     private String title;
 
-    @Column
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Method method; // 거래 방식
 
@@ -39,7 +41,7 @@ public class Item {
     @Column
     private String address; //거래 희망 장소
 
-    @Column
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private SaleStatus saleStatus; //판매 여부
 
