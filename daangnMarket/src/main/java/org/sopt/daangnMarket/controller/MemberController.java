@@ -8,6 +8,7 @@ import org.sopt.daangnMarket.util.ApiResponse;
 import org.sopt.daangnMarket.util.ApiUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,7 +21,7 @@ public class MemberController {
     //멤버 생성
     @PostMapping
     public ResponseEntity<ApiResponse<Void>> createMember(
-            @RequestBody MemberCreateDto memberCreate) {
+            @Validated @RequestBody MemberCreateDto memberCreate) {
         memberService.createMember(memberCreate);
         return ApiUtils.success(HttpStatus.CREATED);
     }

@@ -7,6 +7,7 @@ import org.sopt.daangnMarket.util.ApiResponse;
 import org.sopt.daangnMarket.util.ApiUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,7 @@ public class ItemController {
     //물건 등록
     @PostMapping
     public ResponseEntity<ApiResponse<Void>> createItem(
-            @RequestBody ItemCreateDto itemCreate) {
+            @Validated @RequestBody ItemCreateDto itemCreate) {
         itemService.createItem(itemCreate);
         return ApiUtils.success(HttpStatus.CREATED);
     }
