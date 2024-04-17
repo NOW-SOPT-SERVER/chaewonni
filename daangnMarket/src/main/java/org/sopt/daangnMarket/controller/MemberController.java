@@ -2,17 +2,13 @@ package org.sopt.daangnMarket.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.sopt.daangnMarket.dto.Member.request.MemberCreateDto;
+import org.sopt.daangnMarket.dto.Member.response.MemberFindDto;
 import org.sopt.daangnMarket.service.MemberService;
 import org.sopt.daangnMarket.util.ApiResponse;
 import org.sopt.daangnMarket.util.ApiUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.net.URI;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,5 +23,11 @@ public class MemberController {
             @RequestBody MemberCreateDto memberCreate) {
         memberService.createMember(memberCreate);
         return ApiUtils.success(HttpStatus.CREATED);
+    }
+
+    //멤버 조회
+    @GetMapping("/{memberId}")
+    public ResponseEntity<ApiResponse<MemberFindDto>> findMember(@PathVariable Long memberId) {
+        return ApiUtils.success(HttpStatus.OK, memberService.findMember(memberId));
     }
 }

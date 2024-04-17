@@ -4,8 +4,10 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.sopt.daangnMarket.domain.Member;
 import org.sopt.daangnMarket.dto.Member.request.MemberCreateDto;
+import org.sopt.daangnMarket.dto.Member.response.MemberFindDto;
 import org.sopt.daangnMarket.exception.ApiErrorCode;
 import org.sopt.daangnMarket.exception.DuplicateMemberException;
+import org.sopt.daangnMarket.exception.NotFoundException;
 import org.sopt.daangnMarket.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +30,12 @@ public class MemberService {
             // 중복된 이메일이나 학번이 존재하는 경우 예외 발생
             throw new DuplicateMemberException(ApiErrorCode.DUPLICATE_MEMBER);
         }
+    }
+
+    public MemberFindDto findMember(Long memberId) {
+       Member member = memberRepository.findById(memberId).orElseThrow(
+               () -> new NotFoundException(ApiErrorCode.MEMBER_NOT_FOUND)
+       );
+       return MemberFindDto.of(member);
     }
 }
