@@ -14,10 +14,9 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public String createMember(MemberCreateDto memberCreate) {
+    public void createMember(MemberCreateDto memberCreate) {
 
         Member member = Member.create(memberCreate.nickname(), memberCreate.phoneNumber());
         memberRepository.save(member);
-        return member.getId().toString();
     }
 }
