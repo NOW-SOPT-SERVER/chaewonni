@@ -10,17 +10,15 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = {NotFoundException.class, DuplicateMemberException.class})
-    public ResponseEntity<ApiResponse<String>> handleCustomException(RuntimeException e) {
-        ApiErrorCode errorCode;
-        if (e instanceof NotFoundException) {
-            errorCode = ((NotFoundException) e).getErrorCode();
-        } else if (e instanceof DuplicateMemberException) {
-            errorCode = ((DuplicateMemberException) e).getErrorCode();
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ApiResponse.error(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error"));
-        }
-        return ApiUtils.error(HttpStatus.valueOf(errorCode.getCode()), errorCode);
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ApiResponse<String>> handleNotFoundException(NotFoundException e) {
+        ApiErrorCode errorCode = e.getErrorCode();
+        return ApiUtils.error(HttpStatus.valueOf(errorCode.getStatus()), errorCode);
+    }
+
+    @ExceptionHandler(DuplicateMemberException.class)
+    public ResponseEntity<ApiResponse<String>> handleDuplicateMemberException(DuplicateMemberException e) {
+        ApiErrorCode errorCode = e.getErrorCode();
+        return ApiUtils.error(HttpStatus.valueOf(errorCode.getStatus()), errorCode);
     }
 }
