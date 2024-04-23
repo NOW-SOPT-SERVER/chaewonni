@@ -15,7 +15,6 @@ public class Member {
     private Long id;
 
     @Column(nullable = false)
-    @Size(min = 2, max = 10, message = "2글자 이상, 10글자 이하여야 합니다.")
     private String nickname;
 
     @Column(nullable = false)

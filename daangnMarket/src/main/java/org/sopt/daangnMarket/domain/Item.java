@@ -35,8 +35,7 @@ public class Item {
     @Column
     private int price;
 
-    @Column
-    @Size(min = 4, message = "최소 4글자 이상이어야 합니다.")
+    @Column(nullable = false)
     private String description; //자세한 설명
 
     @Column
