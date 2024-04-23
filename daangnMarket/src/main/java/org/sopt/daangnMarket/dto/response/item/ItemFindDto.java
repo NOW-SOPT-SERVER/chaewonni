@@ -6,6 +6,7 @@ import org.sopt.daangnMarket.domain.enums.SaleStatus;
 import org.sopt.daangnMarket.dto.response.member.MemberFindDto;
 
 public record ItemFindDto(
+
         Long id,
         String title,
         TransactionType transactionType,

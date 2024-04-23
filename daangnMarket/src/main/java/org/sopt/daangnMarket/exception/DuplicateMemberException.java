@@ -1,6 +1,7 @@
 package org.sopt.daangnMarket.exception;
 
 public class DuplicateMemberException extends RuntimeException {
+
     private final ApiErrorCode errorCode;
 
     public DuplicateMemberException(ApiErrorCode errorCode) {

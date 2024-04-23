@@ -3,6 +3,7 @@ package org.sopt.daangnMarket.exception;
 import org.springframework.http.HttpStatus;
 
 public enum ApiErrorCode {
+
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "Member not found"),
     CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "Category not found"),
     DUPLICATE_MEMBER(HttpStatus.CONFLICT.value(), "Duplicate member"),

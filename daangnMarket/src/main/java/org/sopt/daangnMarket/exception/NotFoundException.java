@@ -1,6 +1,7 @@
 package org.sopt.daangnMarket.exception;
 
 public class NotFoundException extends RuntimeException {
+
     private final ApiErrorCode errorCode;
 
     public NotFoundException(ApiErrorCode errorCode) {

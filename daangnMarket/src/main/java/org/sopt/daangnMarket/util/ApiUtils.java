@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 public class ApiUtils {
+
     public static <T> ResponseEntity<ApiResponse<T>> success(HttpStatus status, T result) {
         return ResponseEntity.status(status).body(ApiResponse.success(status, result));
     }

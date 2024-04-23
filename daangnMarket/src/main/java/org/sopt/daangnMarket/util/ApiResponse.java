@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @Builder
 public class ApiResponse<T> {
+
     private final boolean success;
     private final int code;
     @JsonInclude(JsonInclude.Include.NON_NULL)
