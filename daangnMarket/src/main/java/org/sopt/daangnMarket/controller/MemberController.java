@@ -1,8 +1,8 @@
 package org.sopt.daangnMarket.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.sopt.daangnMarket.dto.Member.request.MemberCreateDto;
-import org.sopt.daangnMarket.dto.Member.response.MemberFindDto;
+import org.sopt.daangnMarket.dto.request.member.MemberCreateDto;
+import org.sopt.daangnMarket.dto.response.member.MemberFindDto;
 import org.sopt.daangnMarket.service.MemberService;
 import org.sopt.daangnMarket.util.ApiResponse;
 import org.sopt.daangnMarket.util.ApiUtils;

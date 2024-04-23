@@ -1,4 +1,4 @@
-package org.sopt.daangnMarket.dto.Member.request;
+package org.sopt.daangnMarket.dto.request.member;
 
 public record MemberCreateDto(
         String nickname,

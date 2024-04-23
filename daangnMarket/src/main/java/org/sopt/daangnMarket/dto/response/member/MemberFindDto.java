@@ -1,4 +1,4 @@
-package org.sopt.daangnMarket.dto.Member.response;
+package org.sopt.daangnMarket.dto.response.member;
 
 import org.sopt.daangnMarket.domain.Member;
 
