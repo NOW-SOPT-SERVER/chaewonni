@@ -1,13 +1,12 @@
-package org.sopt.daangnMarket.dto.Item.request;
+package org.sopt.daangnMarket.dto.request.item;
 
-import org.sopt.daangnMarket.domain.Category;
-import org.sopt.daangnMarket.domain.enums.Method;
+import org.sopt.daangnMarket.domain.enums.TransactionType;
 
 public record ItemCreateDto(
         Long memberId,
         String title,
         String category,
-        Method method,
+        TransactionType transactionType,
         int price,
         String description,
         String address

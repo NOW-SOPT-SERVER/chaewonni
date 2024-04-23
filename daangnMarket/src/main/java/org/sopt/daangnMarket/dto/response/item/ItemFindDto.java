@@ -1,15 +1,14 @@
-package org.sopt.daangnMarket.dto.Item.response;
+package org.sopt.daangnMarket.dto.response.item;
 
 import org.sopt.daangnMarket.domain.Item;
-import org.sopt.daangnMarket.domain.Member;
-import org.sopt.daangnMarket.domain.enums.Method;
+import org.sopt.daangnMarket.domain.enums.TransactionType;
 import org.sopt.daangnMarket.domain.enums.SaleStatus;
-import org.sopt.daangnMarket.dto.Member.response.MemberFindDto;
+import org.sopt.daangnMarket.dto.response.member.MemberFindDto;
 
 public record ItemFindDto(
         Long id,
         String title,
-        Method method,
+        TransactionType transactionType,
         int price,
         String description,
         String address,
@@ -21,7 +20,7 @@ public record ItemFindDto(
         return new ItemFindDto(
                 item.getId(),
                 item.getTitle(),
-                item.getMethod(),
+                item.getTransactionType(),
                 item.getPrice(),
                 item.getDescription(),
                 item.getAddress(),

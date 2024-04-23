@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.sopt.daangnMarket.domain.enums.Method;
+import org.sopt.daangnMarket.domain.enums.TransactionType;
 import org.sopt.daangnMarket.domain.enums.SaleStatus;
 
 @Entity
@@ -29,7 +29,7 @@ public class Item {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Method method; // 거래 방식
+    private TransactionType transactionType; // 거래 방식
 
     @Column
     private int price;

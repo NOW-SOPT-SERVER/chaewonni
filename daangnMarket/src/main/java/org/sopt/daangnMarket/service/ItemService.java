@@ -1,12 +1,11 @@
 package org.sopt.daangnMarket.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.sopt.daangnMarket.domain.Category;
 import org.sopt.daangnMarket.domain.Item;
 import org.sopt.daangnMarket.domain.Member;
 import org.sopt.daangnMarket.domain.enums.SaleStatus;
-import org.sopt.daangnMarket.dto.Item.request.ItemCreateDto;
+import org.sopt.daangnMarket.dto.request.item.ItemCreateDto;
 import org.sopt.daangnMarket.exception.ApiErrorCode;
 import org.sopt.daangnMarket.exception.NotFoundException;
 import org.sopt.daangnMarket.repository.CategoryRepository;
@@ -31,7 +30,7 @@ public class ItemService {
 
         Item item = Item.builder()
                 .title(itemCreate.title())
-                .method(itemCreate.method())
+                .transactionType(itemCreate.transactionType())
                 .price(itemCreate.price())
                 .description(itemCreate.description())
                 .address(itemCreate.address())

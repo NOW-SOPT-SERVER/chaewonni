@@ -1,6 +1,6 @@
 package org.sopt.daangnMarket.domain.enums;
 
-public enum Method {
+public enum TransactionType {
     SELL,
     FREE
 }
