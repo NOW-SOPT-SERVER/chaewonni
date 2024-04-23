@@ -1,23 +1,19 @@
 package org.sopt.daangnMarket.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
+@AllArgsConstructor
+@Builder
 public class ApiResponse<T> {
     private final boolean success;
     private final int code;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final T result;
-
-    @Builder
-    public ApiResponse(int code, boolean success, T result) {
-        this.success = success;
-        this.code = code;
-        this.result = result;
-    }
 
     // 성공 응답
     public static <T> ApiResponse<T> success(HttpStatus status, T result) {
