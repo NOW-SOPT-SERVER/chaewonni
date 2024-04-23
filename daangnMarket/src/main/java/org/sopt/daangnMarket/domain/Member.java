@@ -22,14 +22,14 @@ public class Member {
     private String phoneNumber;
 
     @Column(nullable = false)
-    private double MannerTemperature;
+    private double mannerTemperature;
 
     // 정적 팩토리 메서드
     public static Member create(String nickname, String phoneNumber) {
         Member member = new Member();
         member.nickname = nickname;
         member.phoneNumber = phoneNumber;
-        member.MannerTemperature = 36.5;
+        member.mannerTemperature = 36.5;
         return member;
     }
 }
