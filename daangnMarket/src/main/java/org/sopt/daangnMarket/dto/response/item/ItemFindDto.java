@@ -1,6 +1,7 @@
 package org.sopt.daangnMarket.dto.response.item;
 
 import org.sopt.daangnMarket.domain.Item;
+import org.sopt.daangnMarket.domain.enums.Category;
 import org.sopt.daangnMarket.domain.enums.TransactionType;
 import org.sopt.daangnMarket.domain.enums.SaleStatus;
 import org.sopt.daangnMarket.dto.response.member.MemberFindDto;
@@ -14,7 +15,7 @@ public record ItemFindDto(
         String description,
         String address,
         SaleStatus saleStatus,
-        String category,
+        Category category,
         MemberFindDto member
 ) {
     public static ItemFindDto of(Item item) {
@@ -26,7 +27,7 @@ public record ItemFindDto(
                 item.getDescription(),
                 item.getAddress(),
                 item.getSaleStatus(),
-                item.getCategory().getName(),
+                item.getCategory(),
                 MemberFindDto.of(item.getMember()));
     }
 }

@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.sopt.daangnMarket.domain.enums.Category;
 import org.sopt.daangnMarket.domain.enums.TransactionType;
 import org.sopt.daangnMarket.domain.enums.SaleStatus;
 
@@ -45,9 +46,8 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private SaleStatus saleStatus; //판매 여부
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    @OnDelete(action = OnDeleteAction.SET_NULL)
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     @ManyToOne
