@@ -19,4 +19,16 @@ public class Post extends BaseTimeEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Blog blog;
+
+    private Post(Blog blog, String title, String content) {
+        this.blog = blog;
+        this.title = title;
+        this.content = content;
+    }
+
+    public static Post create(
+            Blog blog, String title, String content
+    ) {
+        return new Post(blog, title, content);
+    }
 }
