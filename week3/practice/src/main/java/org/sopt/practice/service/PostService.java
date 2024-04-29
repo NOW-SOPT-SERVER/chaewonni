@@ -5,7 +5,7 @@ import org.sopt.practice.common.dto.ErrorMessage;
 import org.sopt.practice.domain.Blog;
 import org.sopt.practice.domain.Post;
 import org.sopt.practice.exception.NotFoundException;
-import org.sopt.practice.exception.UnauthorizedException;
+import org.sopt.practice.exception.ForbiddenException;
 import org.sopt.practice.repository.BlogRepository;
 import org.sopt.practice.repository.PostRepository;
 import org.sopt.practice.service.dto.PostCreateRequest;
@@ -41,7 +41,7 @@ public class PostService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.BLOG_NOT_FOUND));
 
         if(!blog.getMember().getId().equals(memberId)) {
-            throw new UnauthorizedException(ErrorMessage.UNAUTHORIZED_MEMBER_ACCESS);
+            throw new ForbiddenException(ErrorMessage.FORBIDDEN_MEMBER_ACCESS);
         }
     }
 

@@ -1,6 +1,5 @@
 package org.sopt.practice.service.dto;
 
-import org.sopt.practice.domain.Blog;
 import org.sopt.practice.domain.Post;
 
 public record PostFindDto(
