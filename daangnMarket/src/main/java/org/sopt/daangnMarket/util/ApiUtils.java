@@ -17,5 +17,8 @@ public class ApiUtils {
     public static ResponseEntity<ApiResponse<String>> error(HttpStatus status, ApiErrorCode errorCode) {
         return ResponseEntity.status(status).body(ApiResponse.error(status, errorCode.getMessage()));
     }
-}
 
+    public static ResponseEntity<ApiResponse<String>> validError(HttpStatus status, String message) {
+        return ResponseEntity.status(status).body(ApiResponse.error(status, message));
+    }
+}
