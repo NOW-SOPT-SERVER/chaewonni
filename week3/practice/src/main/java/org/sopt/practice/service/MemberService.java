@@ -29,14 +29,8 @@ public class MemberService {
         return member.getId().toString();
     }
 
-//    public Member findById(Long memberId) {
-//        return memberRepository.findByIdOrThrow(memberId);
-//    }
-
     public Member findById(Long memberId) {
-        return memberRepository.findById(memberId).orElseThrow(
-                () -> new NotFoundException(ErrorMessage.MEMBER_NOT_FOUND)
-        );
+        return memberRepository.findByIdOrThrow(memberId);
     }
 
     public MemberFindDto findMemberById(Long memberId) {
