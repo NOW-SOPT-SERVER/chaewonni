@@ -2,8 +2,8 @@ package org.sopt.practice.exception;
 
 import org.sopt.practice.common.dto.ErrorMessage;
 
-public class UnauthorizedException extends BusinessException{
-    public UnauthorizedException(ErrorMessage errorMessage) {
+public class ForbiddenException extends BusinessException{
+    public ForbiddenException(ErrorMessage errorMessage) {
         super(errorMessage);
     }
 }
