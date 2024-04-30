@@ -1,8 +1,6 @@
 package org.sopt.daangnMarket.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +23,6 @@ public class Item {
     private Long id;
 
     @Column(nullable = false)
-    @NotBlank(message = "제목은 필수입니다.")
     private String title;
 
     @Column(nullable = false)
@@ -53,5 +50,10 @@ public class Item {
     @JoinColumn(name = "member_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Member member;
+
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    private Location registeredLocation; //상품이 등록된 위치
 
 }
