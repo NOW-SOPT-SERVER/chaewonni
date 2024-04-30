@@ -2,8 +2,6 @@ package org.sopt.daangnMarket.dto.request.item;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import org.sopt.daangnMarket.domain.enums.Category;
-import org.sopt.daangnMarket.domain.enums.TransactionType;
 
 public record ItemCreateDto(
 

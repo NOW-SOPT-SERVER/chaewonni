@@ -6,7 +6,10 @@ public enum ApiErrorCode {
 
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "Member not found"),
     CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "Category not found"),
+    LOCATION_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "Location not found"),
+
     DUPLICATE_MEMBER(HttpStatus.CONFLICT.value(), "Duplicate member"),
+
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal server error");
 
     private int status;
