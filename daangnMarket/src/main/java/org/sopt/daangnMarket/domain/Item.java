@@ -46,6 +46,10 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private Category category;
 
+    @Builder.Default
+    @Column(nullable = false)
+    private int bookmarkCount = 0;
+
     @ManyToOne
     @JoinColumn(name = "member_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -56,4 +60,7 @@ public class Item {
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Location registeredLocation; //상품이 등록된 위치
 
+    public void setBookmarkCount(int bookmarkCount) {
+        this.bookmarkCount = bookmarkCount;
+    }
 }
