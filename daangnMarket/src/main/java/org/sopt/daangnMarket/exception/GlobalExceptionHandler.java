@@ -29,4 +29,10 @@ public class GlobalExceptionHandler {
         ApiErrorCode errorCode = e.getErrorCode();
         return ApiUtils.error(HttpStatus.valueOf(errorCode.getStatus()), errorCode);
     }
+
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<ApiResponse<String>> handleConflictException(ConflictException e) {
+        ApiErrorCode errorCode = e.getErrorCode();
+        return ApiUtils.error(HttpStatus.valueOf(errorCode.getStatus()), errorCode);
+    }
 }
