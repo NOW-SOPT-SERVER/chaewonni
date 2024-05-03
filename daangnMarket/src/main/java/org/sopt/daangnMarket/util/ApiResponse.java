@@ -13,23 +13,26 @@ public class ApiResponse<T> {
 
     private final boolean success;
     private final int code;
+    private final String message;
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private final T result;
+    private final T data;
 
     // 성공 응답
-    public static <T> ApiResponse<T> success(HttpStatus status, T result) {
+    public static <T> ApiResponse<T> success(HttpStatus status, String message, T result) {
         return ApiResponse.<T>builder()
                 .success(true)
                 .code(status.value())
-                .result(result)
+                .message(message)
+                .data(result)
                 .build();
     }
 
     // 결과가 없는 성공 응답
-    public static ApiResponse<Void> success(HttpStatus status) {
+    public static ApiResponse<Void> success(HttpStatus status, String message) {
         return ApiResponse.<Void>builder()
                 .success(true)
                 .code(status.value())
+                .message(message)
                 .build();
     }
 
@@ -38,7 +41,7 @@ public class ApiResponse<T> {
         return ApiResponse.<String>builder()
                 .success(false)
                 .code(status.value())
-                .result(message)
+                .message(message)
                 .build();
     }
 }
