@@ -6,7 +6,7 @@ import org.sopt.daangnMarket.domain.Location;
 import org.sopt.daangnMarket.domain.Member;
 import org.sopt.daangnMarket.domain.enums.Category;
 import org.sopt.daangnMarket.domain.enums.SaleStatus;
-import org.sopt.daangnMarket.domain.enums.TransactionType;
+import org.sopt.daangnMarket.domain.enums.TradeType;
 import org.sopt.daangnMarket.dto.request.item.ItemCreateDto;
 import org.sopt.daangnMarket.dto.response.item.ItemFindAllDto;
 import org.sopt.daangnMarket.util.dto.ErrorMessage;
@@ -32,11 +32,11 @@ public class ItemService {
 
         Category category = Category.fromKoreanName(itemCreate.category());
 
-        TransactionType transactionType = TransactionType.fromKoreanName(itemCreate.transactionType());
+        TradeType tradeType = TradeType.fromKoreanName(itemCreate.transactionType());
 
         Item item = Item.builder()
                 .title(itemCreate.title())
-                .transactionType(transactionType)
+                .tradeType(tradeType)
                 .price(itemCreate.price())
                 .description(itemCreate.description())
                 .registeredLocation(member.getLocation())

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.sopt.daangnMarket.domain.enums.Category;
-import org.sopt.daangnMarket.domain.enums.TransactionType;
+import org.sopt.daangnMarket.domain.enums.TradeType;
 import org.sopt.daangnMarket.domain.enums.SaleStatus;
 
 @Entity
@@ -27,7 +27,7 @@ public class Item {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private TransactionType transactionType; // 거래 방식
+    private TradeType tradeType; // 거래 방식
 
     @Column
     private int price;
