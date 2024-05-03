@@ -1,15 +1,16 @@
 package org.sopt.daangnMarket.exception;
 
+import lombok.Getter;
+import org.sopt.daangnMarket.util.dto.ErrorMessage;
+
+@Getter
 public class DuplicateMemberException extends RuntimeException {
 
-    private final ApiErrorCode errorCode;
+    private final ErrorMessage errorMessage;
 
-    public DuplicateMemberException(ApiErrorCode errorCode) {
-        super(errorCode.getMessage());
-        this.errorCode = errorCode;
+    public DuplicateMemberException(ErrorMessage errorMessage) {
+        super(errorMessage.getMessage());
+        this.errorMessage = errorMessage;
     }
 
-    public ApiErrorCode getErrorCode() {
-        return errorCode;
-    }
 }

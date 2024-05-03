@@ -9,7 +9,7 @@ import org.sopt.daangnMarket.domain.enums.SaleStatus;
 import org.sopt.daangnMarket.domain.enums.TransactionType;
 import org.sopt.daangnMarket.dto.request.item.ItemCreateDto;
 import org.sopt.daangnMarket.dto.response.item.ItemFindAllDto;
-import org.sopt.daangnMarket.exception.ApiErrorCode;
+import org.sopt.daangnMarket.util.dto.ErrorMessage;
 import org.sopt.daangnMarket.exception.NotFoundException;
 import org.sopt.daangnMarket.repository.ItemRepository;
 import org.sopt.daangnMarket.repository.LocationRepository;
@@ -28,7 +28,7 @@ public class ItemService {
 
     public void createItem(ItemCreateDto itemCreate) {
         Member member = memberRepository.findById(itemCreate.memberId())
-                .orElseThrow(() -> new NotFoundException(ApiErrorCode.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.MEMBER_NOT_FOUND));
 
         Category category = Category.fromKoreanName(itemCreate.category());
 
@@ -52,7 +52,7 @@ public class ItemService {
     // 등록된 상품들에 대한 지역별 조회
     public List<ItemFindAllDto> findAllItems(Long locationId) {
         Location location = locationRepository.findById(locationId)
-                .orElseThrow(() -> new NotFoundException(ApiErrorCode.LOCATION_NOT_FOUND));
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.LOCATION_NOT_FOUND));
 
         return ItemFindAllDto.listOf(itemRepository.findAllByRegisteredLocation(location));
     }
