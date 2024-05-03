@@ -1,6 +1,5 @@
 package org.sopt.daangnMarket.service;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.sopt.daangnMarket.domain.Location;
 import org.sopt.daangnMarket.domain.Member;
@@ -12,6 +11,7 @@ import org.sopt.daangnMarket.exception.NotFoundException;
 import org.sopt.daangnMarket.repository.LocationRepository;
 import org.sopt.daangnMarket.repository.MemberRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +37,7 @@ public class MemberService {
         }
     }
 
+    @Transactional(readOnly = true)
     public MemberFindDto findMember(Long memberId) {
        Member member = memberRepository.findById(memberId).orElseThrow(
                () -> new NotFoundException(ErrorMessage.MEMBER_NOT_FOUND)

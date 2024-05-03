@@ -15,6 +15,7 @@ import org.sopt.daangnMarket.repository.ItemRepository;
 import org.sopt.daangnMarket.repository.LocationRepository;
 import org.sopt.daangnMarket.repository.MemberRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final LocationRepository locationRepository;
 
+    @Transactional
     public void createItem(ItemCreateDto itemCreate) {
         Member member = memberRepository.findById(itemCreate.memberId())
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.MEMBER_NOT_FOUND));
@@ -49,6 +51,7 @@ public class ItemService {
         itemRepository.save(item);
     }
 
+    @Transactional(readOnly = true)
     // 등록된 상품들에 대한 지역별 조회
     public List<ItemFindAllDto> findAllItems(Long locationId) {
         Location location = locationRepository.findById(locationId)
