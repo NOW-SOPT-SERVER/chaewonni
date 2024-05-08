@@ -20,6 +20,6 @@ public enum TradeType {
                 return tradeType;
             }
         }
-        return null;
+        throw new IllegalArgumentException("유효하지 않은 이름 " + koreanName);
     }
 }
