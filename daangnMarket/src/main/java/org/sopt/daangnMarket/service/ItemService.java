@@ -34,7 +34,7 @@ public class ItemService {
 
         Category category = Category.fromKoreanName(itemCreate.category());
 
-        TradeType tradeType = TradeType.fromKoreanName(itemCreate.transactionType());
+        TradeType tradeType = TradeType.fromKoreanName(itemCreate.tradeType());
 
         Item item = Item.builder()
                 .title(itemCreate.title())

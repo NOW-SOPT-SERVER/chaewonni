@@ -9,7 +9,7 @@ public record ItemFindAllDto(
 
         Long id,
         String title,
-        String transactionType,
+        String tradeType,
         int price,
         LocationFindDto registeredLocation,
         String saleStatus
