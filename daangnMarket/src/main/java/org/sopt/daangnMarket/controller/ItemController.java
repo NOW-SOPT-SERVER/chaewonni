@@ -32,7 +32,7 @@ public class ItemController {
     // 등록된 상품들에 대한 지역별 조회
     @GetMapping("/items/location/{locationId}")
     public ResponseEntity<ApiResponse<List<ItemFindAllDto>>> findAllItems(
-            @PathVariable Long locationId
+            @PathVariable(name = "locationId") Long locationId
     ) {
         return ApiUtils.success(HttpStatus.OK, SuccessMessage.ITEMS_FIND_SUCCESS, itemService.findAllItems(locationId));
     }
