@@ -1,5 +1,6 @@
 package org.sopt.daangnMarket.controller;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.sopt.daangnMarket.service.BookmarkService;
 import org.sopt.daangnMarket.util.ApiResponse;
@@ -17,7 +18,7 @@ public class BookmarkController {
     private final BookmarkService bookmarkService;
 
     @PostMapping("/bookmarks/{itemId}")
-    public ResponseEntity<ApiResponse<Void>> addBookmark(@PathVariable Long itemId, @RequestParam Long memberId) {
+    public ResponseEntity<ApiResponse<Void>> addBookmark(@PathVariable @NotNull Long itemId, @RequestParam @NotNull Long memberId) {
         bookmarkService.addBookmark(memberId, itemId);
         return ApiUtils.success(HttpStatus.CREATED, SuccessMessage.BOOKMARK_CREATE_SUCCESS);
     }
