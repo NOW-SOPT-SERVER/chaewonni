@@ -21,6 +21,7 @@ public class BookmarkService {
     private final ItemRepository itemRepository;
     private final BookmarkRepository bookmarkRepository;
 
+    //좋아요 추가
     @Transactional
     public void addBookmark(Long memberId, Long itemId) {
         Member member = memberRepository.findById(memberId)
@@ -34,7 +35,7 @@ public class BookmarkService {
                     throw new ConflictException(ErrorMessage.BOOKMARK_CONFLICT);
                 });
 
-        item.setBookmarkCount(item.getBookmarkCount() + 1);
+        item.addBookmarkCount();
         bookmarkRepository.save(Bookmark.create(member, item));
     }
 }
