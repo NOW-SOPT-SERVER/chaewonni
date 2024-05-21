@@ -20,12 +20,12 @@ public class Bookmark {
     @Column(nullable = false)
     private LocalDateTime createDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Item item;

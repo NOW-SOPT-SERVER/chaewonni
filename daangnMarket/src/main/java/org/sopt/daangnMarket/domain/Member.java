@@ -24,7 +24,7 @@ public class Member {
     @Column(nullable = false)
     private double mannerTemperature;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Location location; //사용자가 인증한 현재 동네

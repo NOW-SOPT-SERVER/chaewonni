@@ -50,12 +50,12 @@ public class Item {
     @Column(nullable = false)
     private int bookmarkCount = 0;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Location registeredLocation; //상품이 등록된 위치
