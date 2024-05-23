@@ -1,8 +1,6 @@
 package org.sopt.daangnMarket.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.sopt.daangnMarket.domain.enums.Category;
-import org.sopt.daangnMarket.domain.enums.TransactionType;
+import org.sopt.daangnMarket.domain.enums.TradeType;
 import org.sopt.daangnMarket.domain.enums.SaleStatus;
 
 @Entity
@@ -25,12 +23,11 @@ public class Item {
     private Long id;
 
     @Column(nullable = false)
-    @NotBlank(message = "제목은 필수입니다.")
     private String title;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private TransactionType transactionType; // 거래 방식
+    private TradeType tradeType; // 거래 방식
 
     @Column
     private int price;
@@ -49,9 +46,21 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    @ManyToOne
+    @Builder.Default
+    @Column(nullable = false)
+    private int bookmarkCount = 0;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Member member;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_id")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    private Location registeredLocation; //상품이 등록된 위치
+
+    public void addBookmarkCount() {
+        this.bookmarkCount ++;
+    }
 }
