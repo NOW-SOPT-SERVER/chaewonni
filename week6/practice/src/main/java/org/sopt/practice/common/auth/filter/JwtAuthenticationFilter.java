@@ -19,10 +19,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 import static org.sopt.practice.common.jwt.JwtValidationType.VALID_JWT;
-
+// 요청에서 Jwt를 검증하는 커스텀 필터 클래스
 @Component
 @RequiredArgsConstructor
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+public class JwtAuthenticationFilter extends OncePerRequestFilter { // 요청이 주어졌을 때, 한 번만 수행되는 필터를 상속받음
 
     private final JwtTokenProvider jwtTokenProvider;
 

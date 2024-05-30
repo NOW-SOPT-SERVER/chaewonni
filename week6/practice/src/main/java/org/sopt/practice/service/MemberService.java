@@ -2,6 +2,8 @@ package org.sopt.practice.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.sopt.practice.common.auth.redis.domain.Token;
+import org.sopt.practice.common.auth.redis.repository.TokenRepository;
 import org.sopt.practice.common.jwt.JwtTokenProvider;
 import org.sopt.practice.common.auth.UserAuthentication;
 import org.sopt.practice.domain.Member;
@@ -20,14 +22,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
-
-//    @Transactional //db에 변경사항이 생길 때 사용
-//    public String createMember(MemberCreateDto memberCreate) {
-//
-//        Member member = Member.create(memberCreate.name(), memberCreate.part(), memberCreate.age());
-//        memberRepository.save(member);
-//        return member.getId().toString();
-//    }
+    private final TokenRepository tokenRepository;
 
     @Transactional
     public UserJoinResponse createMember(
@@ -37,10 +32,17 @@ public class MemberService {
                 Member.create(memberCreate.name(), memberCreate.part(), memberCreate.age())
         );
         Long memberId = member.getId();
+        UserAuthentication userAuthentication = UserAuthentication.createUserAuthentication(memberId);
         String accessToken = jwtTokenProvider.issueAccessToken(
-                UserAuthentication.createUserAuthentication(memberId)
+                userAuthentication
         );
-        return UserJoinResponse.of(accessToken, memberId.toString());
+        String refreshToken = jwtTokenProvider.issueRefreshToken(
+                userAuthentication
+        );
+
+        tokenRepository.save(Token.of(memberId, refreshToken));
+
+        return UserJoinResponse.of(accessToken, refreshToken, memberId.toString());
     }
 
     public Member findById(Long memberId) {

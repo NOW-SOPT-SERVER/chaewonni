@@ -17,14 +17,21 @@ public class JwtTokenProvider {
 
     private static final String USER_ID = "userId";
 
-    private static final Long ACCESS_TOKEN_EXPIRATION_TIME = 24 * 60 * 60 * 1000L * 14;
+    private static final Long ACCESS_TOKEN_EXPIRATION_TIME = 24 * 60 * 60 * 1000L;
+
+    private static final Long REFRESH_TOKEN_EXPIRATION_TIME = 24 * 60 * 60 * 1000L * 14;
 
     @Value("${jwt.secret}")
     private String JWT_SECRET;
 
 
+    // Authentication 객체로 AccessToken 발행
     public String issueAccessToken(final Authentication authentication) {
         return generateToken(authentication, ACCESS_TOKEN_EXPIRATION_TIME);
+    }
+
+    public String issueRefreshToken(final Authentication authentication) {
+        return generateToken(authentication, REFRESH_TOKEN_EXPIRATION_TIME);
     }
 
 
@@ -34,8 +41,10 @@ public class JwtTokenProvider {
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + tokenExpirationTime));      // 만료 시간
 
+        // Claim에는 token 생성시간과 만료시간, 그리고 사용자 인증 정보가 들어감
         claims.put(USER_ID, authentication.getPrincipal());
 
+        // 헤더 타입을 설정해주는 Header Param, Claim 을 이용한 정보를 대상으로 암호화하여 Jwt 토큰을 만들어 반환
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE) // Header
                 .setClaims(claims) // Claim
@@ -48,6 +57,7 @@ public class JwtTokenProvider {
         return Keys.hmacShaKeyFor(encodedKey.getBytes());   //일반적으로 HMAC (Hash-based Message Authentication Code) 알고리즘 사용
     }
 
+    // Token에서 Claim을 추출하는 과정에서 에러가 발생하면 Catch한 후 Validation을 진행
     public JwtValidationType validateToken(String token) {
         try {
             final Claims claims = getBody(token);
