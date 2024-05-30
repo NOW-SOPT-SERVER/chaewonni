@@ -1,15 +1,15 @@
 package org.sopt.daangnMarket.common.auth.redis.service;
 
 import lombok.RequiredArgsConstructor;
-import org.sopt.practice.common.auth.UserAuthentication;
-import org.sopt.practice.common.auth.redis.domain.Token;
-import org.sopt.practice.common.auth.redis.repository.TokenRepository;
-import org.sopt.practice.common.dto.ErrorMessage;
-import org.sopt.practice.common.jwt.JwtTokenProvider;
-import org.sopt.practice.common.jwt.JwtValidationType;
-import org.sopt.practice.exception.NotFoundException;
-import org.sopt.practice.exception.UnauthorizedException;
-import org.sopt.practice.service.dto.ReissueTokenResponse;
+import org.sopt.daangnMarket.common.auth.UserAuthentication;
+import org.sopt.daangnMarket.common.auth.redis.domain.Token;
+import org.sopt.daangnMarket.common.auth.redis.repository.TokenRepository;
+import org.sopt.daangnMarket.common.jwt.JwtTokenProvider;
+import org.sopt.daangnMarket.common.jwt.JwtValidationType;
+import org.sopt.daangnMarket.dto.response.token.ReissueTokenResponse;
+import org.sopt.daangnMarket.exception.NotFoundException;
+import org.sopt.daangnMarket.exception.UnauthorizedException;
+import org.sopt.daangnMarket.util.dto.ErrorMessage;
 import org.springframework.stereotype.Service;
 
 @Service

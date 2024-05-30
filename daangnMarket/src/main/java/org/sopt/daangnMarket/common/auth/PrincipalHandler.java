@@ -1,7 +1,7 @@
 package org.sopt.daangnMarket.common.auth;
 
-import org.sopt.practice.common.dto.ErrorMessage;
-import org.sopt.practice.exception.UnauthorizedException;
+import org.sopt.daangnMarket.exception.UnauthorizedException;
+import org.sopt.daangnMarket.util.dto.ErrorMessage;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 

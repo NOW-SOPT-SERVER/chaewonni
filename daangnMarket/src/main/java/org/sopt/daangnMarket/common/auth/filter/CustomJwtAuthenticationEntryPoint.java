@@ -6,8 +6,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.sopt.daangnMarket.util.ApiUtils;
 import org.sopt.daangnMarket.util.dto.ErrorMessage;
-import org.sopt.practice.common.dto.ErrorMessage;
-import org.sopt.practice.common.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;

@@ -1,9 +1,9 @@
 package org.sopt.daangnMarket.common.auth;
 
 import lombok.RequiredArgsConstructor;
-import org.sopt.practice.common.auth.filter.CustomAccessDeniedHandler;
-import org.sopt.practice.common.auth.filter.CustomJwtAuthenticationEntryPoint;
-import org.sopt.practice.common.auth.filter.JwtAuthenticationFilter;
+import org.sopt.daangnMarket.common.auth.filter.CustomAccessDeniedHandler;
+import org.sopt.daangnMarket.common.auth.filter.CustomJwtAuthenticationEntryPoint;
+import org.sopt.daangnMarket.common.auth.filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
