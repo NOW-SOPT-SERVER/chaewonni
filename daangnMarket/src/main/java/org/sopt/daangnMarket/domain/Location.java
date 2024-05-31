@@ -28,6 +28,6 @@ public class Location {
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
     private List<Member> members = new ArrayList<>();
 
-    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "registeredLocation", cascade = CascadeType.ALL)
     private List<Item> items = new ArrayList<>();
 }
