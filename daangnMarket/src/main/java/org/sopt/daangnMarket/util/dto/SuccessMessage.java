@@ -16,6 +16,7 @@ public enum SuccessMessage {
     ITEMS_FIND_SUCCESS(HttpStatus.OK.value(), "지역별 상품 전체 조회가 완료되었습니다."),
 
     TOKEN_REISSUE_SUCCESS(HttpStatus.OK.value(), "액세스 토큰 재발급이 완료되었습니다."),
+    MEMBER_LOGIN_SUCCESS(HttpStatus.OK.value(), "로그인이 성공적으로 완료되었습니다.")
 
     ;
     private final int status;

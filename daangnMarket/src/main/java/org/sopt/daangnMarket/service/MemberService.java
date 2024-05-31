@@ -10,6 +10,7 @@ import org.sopt.daangnMarket.exception.DuplicateMemberException;
 import org.sopt.daangnMarket.exception.NotFoundException;
 import org.sopt.daangnMarket.repository.LocationRepository;
 import org.sopt.daangnMarket.repository.MemberRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,20 +20,31 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final LocationRepository locationRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
     public void createMember(MemberCreateDto memberCreate) {
         validateDuplicateMember(memberCreate);
         Location location = locationRepository.findByStreet(memberCreate.location())
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.LOCATION_NOT_FOUND));
-        Member member = Member.create(memberCreate.nickname(), memberCreate.phoneNumber(), location);
+
+        Member member = Member.builder()
+                .username(memberCreate.username())
+                .password(bCryptPasswordEncoder.encode(memberCreate.password()))
+                .role("ROLE_USER")
+                .nickname(memberCreate.nickname())
+                .phoneNumber(memberCreate.phoneNumber())
+                .mannerTemperature(36.5)
+                .location(location)
+                .build();
+
         memberRepository.save(member);
     }
 
     private void validateDuplicateMember(MemberCreateDto memberCreate) {
         Long count = memberRepository.countByPhoneNumber(memberCreate.phoneNumber());
         if (count > 0) {
-            // 중복된 이메일이나 학번이 존재하는 경우 예외 발생
+            // 중복된 이메일이 존재하는 경우 예외 발생
             throw new DuplicateMemberException(ErrorMessage.DUPLICATE_MEMBER);
         }
     }

@@ -7,10 +7,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.sopt.daangnMarket.common.auth.UserAuthentication;
+import org.sopt.daangnMarket.common.dto.CustomUserDetails;
 import org.sopt.daangnMarket.common.jwt.JwtTokenProvider;
+import org.sopt.daangnMarket.domain.Member;
 import org.sopt.daangnMarket.exception.UnauthorizedException;
 import org.sopt.daangnMarket.util.dto.ErrorMessage;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -33,14 +36,29 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter { // 요청이
         try {
             final String token = getJwtFromRequest(request);
             if (jwtTokenProvider.validateToken(token) == VALID_JWT) {
+
                 Long memberId = jwtTokenProvider.getUserFromJwt(token);
-                UserAuthentication authentication = UserAuthentication.createUserAuthentication(memberId);
+
+                String username = jwtTokenProvider.getUsername(token);
+                String role = jwtTokenProvider.getRole(token);
+
+                Member member = Member.builder()
+                        .id(memberId)
+                        .username(username)
+                        .password("temppassword")
+                        .role(role)
+                        .build();
+
+                CustomUserDetails customUserDetails = new CustomUserDetails(member);
+
+                UserAuthentication authentication = UserAuthentication.createUserAuthentication(customUserDetails);
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception exception) {
             throw new UnauthorizedException(ErrorMessage.JWT_UNAUTHORIZED_EXCEPTION);
         }
+
         filterChain.doFilter(request, response);
     }
 

@@ -3,16 +3,17 @@ package org.sopt.daangnMarket.common.jwt;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
+import org.sopt.daangnMarket.common.dto.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 import java.util.Date;
 
 @Component
-@RequiredArgsConstructor
 public class JwtTokenProvider {
 
     private static final String USER_ID = "userId";
@@ -21,8 +22,42 @@ public class JwtTokenProvider {
 
     private static final Long REFRESH_TOKEN_EXPIRATION_TIME = 24 * 60 * 60 * 1000L * 14;
 
-    @Value("${jwt.secret}")
-    private String JWT_SECRET;
+    private final String JWT_SECRET;
+    private final SecretKey secretKey;
+
+    public JwtTokenProvider(@Value("${jwt.secret}") String jwtSecret) {
+        this.JWT_SECRET = jwtSecret;
+        this.secretKey = getSigningKey();
+    }
+
+    //검증을 진행할 3개의 메서드 (토큰의 특정요소 검증)
+    public String getUsername(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("username", String.class);
+    }
+
+    public String getRole(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("role", String.class);
+    }
+
+    public Boolean isExpired(String token) {
+        Date expiration = Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getExpiration();
+        return expiration.before(new Date());
+    }
 
 
     // Authentication 객체로 AccessToken 발행
@@ -42,7 +77,8 @@ public class JwtTokenProvider {
                 .setExpiration(new Date(now.getTime() + tokenExpirationTime));      // 만료 시간
 
         // Claim에는 token 생성시간과 만료시간, 그리고 사용자 인증 정보가 들어감
-        claims.put(USER_ID, authentication.getPrincipal());
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        claims.put(USER_ID, userDetails.getMemberId().toString());
 
         // 헤더 타입을 설정해주는 Header Param, Claim 을 이용한 정보를 대상으로 암호화하여 Jwt 토큰을 만들어 반환
         return Jwts.builder()

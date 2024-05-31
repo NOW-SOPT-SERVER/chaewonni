@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/members")
+@RequestMapping("/api/v1")
 public class MemberController {
 
     private final MemberService memberService;
 
     //멤버 생성
-    @PostMapping
+    @PostMapping("/members")
     public ResponseEntity<ApiResponse<Void>> createMember(
             @Validated @RequestBody MemberCreateDto memberCreate) {
         memberService.createMember(memberCreate);
@@ -28,7 +28,7 @@ public class MemberController {
     }
 
     //멤버 조회
-    @GetMapping("/{memberId}")
+    @GetMapping("/members/{memberId}")
     public ResponseEntity<ApiResponse<MemberFindDto>> findMember(@PathVariable Long memberId) {
         return ApiUtils.success(HttpStatus.OK, SuccessMessage.MEMBER_FIND_SUCCESS, memberService.findMember(memberId));
     }

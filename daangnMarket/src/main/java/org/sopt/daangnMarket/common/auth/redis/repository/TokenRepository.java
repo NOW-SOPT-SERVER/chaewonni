@@ -2,6 +2,7 @@ package org.sopt.daangnMarket.common.auth.redis.repository;
 
 import org.sopt.daangnMarket.common.auth.redis.domain.Token;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 

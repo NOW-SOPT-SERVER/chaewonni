@@ -36,4 +36,10 @@ public class GlobalExceptionHandler {
         ErrorMessage errorMessage = e.getErrorMessage();
         return ApiUtils.error(HttpStatus.valueOf(errorMessage.getStatus()), errorMessage);
     }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ApiResponse<String>> handleUnauthorizedException(UnauthorizedException e) {
+        ErrorMessage errorMessage = e.getErrorMessage();
+        return ApiUtils.error(HttpStatus.valueOf(errorMessage.getStatus()), errorMessage);
+    }
 }

@@ -5,7 +5,6 @@ import jakarta.validation.constraints.Size;
 
 public record ItemCreateDto(
 
-        Long memberId,
         @NotBlank(message = "제목은 필수 입력 사항입니다.")
         String title,
         @NotBlank(message = "카테고리는 필수 선택 사항입니다.")

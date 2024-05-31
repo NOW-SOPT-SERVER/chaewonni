@@ -1,6 +1,7 @@
 package org.sopt.daangnMarket.service;
 
 import lombok.RequiredArgsConstructor;
+import org.sopt.daangnMarket.common.auth.PrincipalHandler;
 import org.sopt.daangnMarket.domain.Item;
 import org.sopt.daangnMarket.domain.Location;
 import org.sopt.daangnMarket.domain.Member;
@@ -26,10 +27,11 @@ public class ItemService {
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
     private final LocationRepository locationRepository;
+    private final PrincipalHandler principalHandler;
 
     @Transactional
     public void createItem(ItemCreateDto itemCreate) {
-        Member member = memberRepository.findById(itemCreate.memberId())
+        Member member = memberRepository.findById(principalHandler.getUserIdFromPrincipal())
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.MEMBER_NOT_FOUND));
 
         Category category = Category.fromKoreanName(itemCreate.category());

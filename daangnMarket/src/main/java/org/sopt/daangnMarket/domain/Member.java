@@ -1,6 +1,8 @@
 package org.sopt.daangnMarket.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
@@ -9,6 +11,8 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder //빌더 패턴 적용
 public class Member {
 
     @Id
@@ -20,6 +24,9 @@ public class Member {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private String role;
 
     @Column(nullable = false)
     private String nickname;
@@ -36,12 +43,15 @@ public class Member {
     private Location location; //사용자가 인증한 현재 동네
 
     // 정적 팩토리 메서드
-    public static Member create(String nickname, String phoneNumber, Location location) {
-        Member member = new Member();
-        member.nickname = nickname;
-        member.phoneNumber = phoneNumber;
-        member.location = location;
-        member.mannerTemperature = 36.5;
-        return member;
-    }
+//    public static Member create(String username, String password, String nickname, String phoneNumber, Location location) {
+//        Member member = new Member();
+//        member.username = username;
+//        member.password = password;
+//        member.role = "ROLE_ADMIN";
+//        member.nickname = nickname;
+//        member.phoneNumber = phoneNumber;
+//        member.location = location;
+//        member.mannerTemperature = 36.5;
+//        return member;
+//    }
 }
