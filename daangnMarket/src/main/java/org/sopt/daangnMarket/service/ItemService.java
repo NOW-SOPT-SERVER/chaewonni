@@ -28,17 +28,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemService {
 
-    private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
-    private final LocationRepository locationRepository;
+
+    private final MemberService memberService;
+    private final LocationService locationService;
 
     private final S3Service s3Service;
     private static final String ITEM_S3_UPLOAD_FOLDER = "item/";
 
     @Transactional
     public void createItem(Long memberId, ItemCreateDto itemCreate) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.MEMBER_NOT_FOUND));
+        Member member = memberService.getMemberById(memberId);
 
         Category category = Category.fromKoreanName(itemCreate.category());
 
@@ -67,16 +67,14 @@ public class ItemService {
     @Transactional(readOnly = true)
     // 등록된 상품들에 대한 지역별 조회
     public List<ItemFindAllDto> findAllItems(Long locationId) {
-        Location location = locationRepository.findById(locationId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.LOCATION_NOT_FOUND));
+        Location location = locationService.getLocationById(locationId);
 
-        return ItemFindAllDto.listOf(itemRepository.findAllByRegisteredLocation(location));
+        return ItemFindAllDto.listOf(getAllItemByRegisteredLocation(location));
     }
 
-
+    @Transactional
     public void deleteItem(Long memberId, Long itemId) {
-        Item item = itemRepository.findById(itemId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.ITEM_NOT_FOUND));
+        Item item = getItemById(itemId);
 
         if(!memberId.equals(item.getMember().getId())) {
             throw new ForbiddenException(ErrorMessage.FORBIDDEN_MEMBER_ACCESS);
@@ -88,5 +86,14 @@ public class ItemService {
         } catch (RuntimeException | IOException e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    public Item getItemById(Long itemId) {
+        return itemRepository.findById(itemId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.ITEM_NOT_FOUND));
+    }
+
+    public List<Item> getAllItemByRegisteredLocation(Location location) {
+        return itemRepository.findAllByRegisteredLocation(location);
     }
 }

@@ -17,18 +17,17 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class BookmarkService {
 
-    private final MemberRepository memberRepository;
-    private final ItemRepository itemRepository;
     private final BookmarkRepository bookmarkRepository;
+
+    private final MemberService memberService;
+    private final ItemService itemService;
 
     //좋아요 추가
     @Transactional
     public void addBookmark(Long memberId, Long itemId) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.MEMBER_NOT_FOUND));
+        Member member = memberService.getMemberById(memberId);
 
-        Item item = itemRepository.findById(itemId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.ITEM_NOT_FOUND));
+        Item item = itemService.getItemById(itemId);
 
         bookmarkRepository.findByMemberAndItem(member, item)
                 .ifPresent(b -> {

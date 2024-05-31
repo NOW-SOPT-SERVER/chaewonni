@@ -19,14 +19,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final LocationRepository locationRepository;
+
+    private final LocationService locationService;
+
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
     public void createMember(MemberCreateDto memberCreate) {
         validateDuplicateMember(memberCreate);
-        Location location = locationRepository.findByStreet(memberCreate.location())
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.LOCATION_NOT_FOUND));
+        Location location = locationService.getLocationByStreet(memberCreate.location());
 
         Member member = Member.builder()
                 .username(memberCreate.username())
@@ -57,9 +58,12 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public MemberFindDto findMember(Long memberId) {
-       Member member = memberRepository.findById(memberId).orElseThrow(
-               () -> new NotFoundException(ErrorMessage.MEMBER_NOT_FOUND)
-       );
+       Member member = getMemberById(memberId);
        return MemberFindDto.of(member);
+    }
+
+    public Member getMemberById(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.MEMBER_NOT_FOUND));
     }
 }
