@@ -23,7 +23,7 @@ public enum ErrorMessage {
 
     TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "해당하는 토큰이 존재하지 않습니다."),
 
-    FORBIDDEN_MEMBER_ACCESS(HttpStatus.FORBIDDEN.value(), "이 멤버는 해당 상품에 대한 접근 권한이 없습니다."),
+    FORBIDDEN_MEMBER_ACCESS(HttpStatus.FORBIDDEN.value(), "해당 상품에 대한 접근 권한이 없습니다."),
     JWT_UNAUTHORIZED_EXCEPTION(HttpStatus.UNAUTHORIZED.value(), "사용자의 로그인 검증을 실패했습니다."),
     TOKEN_INVALID_ERROR(HttpStatus.UNAUTHORIZED.value(), "토큰이 유효하지 않습니다.")
 
