@@ -42,10 +42,16 @@ public class MemberService {
     }
 
     private void validateDuplicateMember(MemberCreateDto memberCreate) {
-        Long count = memberRepository.countByPhoneNumber(memberCreate.phoneNumber());
-        if (count > 0) {
-            // 중복된 이메일이 존재하는 경우 예외 발생
-            throw new DuplicateMemberException(ErrorMessage.DUPLICATE_MEMBER);
+        // 아이디(username) 중복 검사
+        boolean existsByUsername = memberRepository.existsByUsername(memberCreate.username());
+        if (existsByUsername) {
+            throw new DuplicateMemberException(ErrorMessage.DUPLICATE_USERNAME);
+        }
+
+        // 전화번호(phoneNumber) 중복 검사
+        boolean existsByPhoneNumber = memberRepository.existsByPhoneNumber(memberCreate.phoneNumber());
+        if (existsByPhoneNumber) {
+            throw new DuplicateMemberException(ErrorMessage.DUPLICATE_PHONE);
         }
     }
 

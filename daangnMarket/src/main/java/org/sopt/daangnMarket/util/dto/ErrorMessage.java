@@ -14,6 +14,8 @@ public enum ErrorMessage {
     ITEM_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "ID에 해당하는 상품이 존재하지 않습니다."),
 
     DUPLICATE_MEMBER(HttpStatus.CONFLICT.value(), "이미 가입한 회원입니다."),
+    DUPLICATE_USERNAME(HttpStatus.CONFLICT.value(), "이미 가입한 유저이름입니다."),
+    DUPLICATE_PHONE(HttpStatus.CONFLICT.value(), "이미 가입한 전화번호입니다."),
 
     BOOKMARK_CONFLICT(HttpStatus.CONFLICT.value(), "이미 좋아요를 누르셨습니다."),
 
