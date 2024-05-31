@@ -1,6 +1,7 @@
 package org.sopt.daangnMarket.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.sopt.daangnMarket.common.auth.PrincipalHandler;
 import org.sopt.daangnMarket.dto.request.item.ItemCreateDto;
 import org.sopt.daangnMarket.dto.response.item.ItemFindAllDto;
 import org.sopt.daangnMarket.service.ItemService;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -20,12 +22,13 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService itemService;
+    private final PrincipalHandler principalHandler;
 
     //물건 등록
     @PostMapping("/items")
     public ResponseEntity<ApiResponse<Void>> createItem(
-            @Validated @RequestBody ItemCreateDto itemCreate) {
-        itemService.createItem(itemCreate);
+            @Validated @ModelAttribute ItemCreateDto itemCreate) {
+        itemService.createItem(principalHandler.getUserIdFromPrincipal(), itemCreate);
         return ApiUtils.success(HttpStatus.CREATED, SuccessMessage.ITEM_CREATE_SUCCESS);
     }
 
@@ -35,5 +38,14 @@ public class ItemController {
             @PathVariable(name = "locationId") Long locationId
     ) {
         return ApiUtils.success(HttpStatus.OK, SuccessMessage.ITEMS_FIND_SUCCESS, itemService.findAllItems(locationId));
+    }
+
+    //등록한 상품 지우기
+    @DeleteMapping("/items/{itemId}")
+    public ResponseEntity<ApiResponse<Void>> deleteItems(
+            @PathVariable(name = "itemId") Long itemId
+    ) {
+        itemService.deleteItem(principalHandler.getUserIdFromPrincipal(), itemId);
+        return ApiUtils.success(HttpStatus.OK, SuccessMessage.ITEMS_DELETE_SUCCESS);
     }
 }

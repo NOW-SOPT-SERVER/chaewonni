@@ -42,4 +42,10 @@ public class GlobalExceptionHandler {
         ErrorMessage errorMessage = e.getErrorMessage();
         return ApiUtils.error(HttpStatus.valueOf(errorMessage.getStatus()), errorMessage);
     }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<ApiResponse<String>> handleForbiddenException(ForbiddenException e) {
+        ErrorMessage errorMessage = e.getErrorMessage();
+        return ApiUtils.error(HttpStatus.valueOf(errorMessage.getStatus()), errorMessage);
+    }
 }

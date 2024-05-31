@@ -53,6 +53,9 @@ public class Item {
     @Column(nullable = false)
     private int bookmarkCount = 0;
 
+    @Column
+    private String imageUrl;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     @OnDelete(action = OnDeleteAction.CASCADE)

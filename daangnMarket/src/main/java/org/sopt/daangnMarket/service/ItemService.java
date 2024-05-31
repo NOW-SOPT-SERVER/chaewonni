@@ -10,6 +10,9 @@ import org.sopt.daangnMarket.domain.enums.SaleStatus;
 import org.sopt.daangnMarket.domain.enums.TradeType;
 import org.sopt.daangnMarket.dto.request.item.ItemCreateDto;
 import org.sopt.daangnMarket.dto.response.item.ItemFindAllDto;
+import org.sopt.daangnMarket.exception.ForbiddenException;
+import org.sopt.daangnMarket.exception.UnauthorizedException;
+import org.sopt.daangnMarket.external.S3Service;
 import org.sopt.daangnMarket.util.dto.ErrorMessage;
 import org.sopt.daangnMarket.exception.NotFoundException;
 import org.sopt.daangnMarket.repository.ItemRepository;
@@ -18,6 +21,7 @@ import org.sopt.daangnMarket.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -27,30 +31,37 @@ public class ItemService {
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
     private final LocationRepository locationRepository;
-    private final PrincipalHandler principalHandler;
+
+    private final S3Service s3Service;
+    private static final String ITEM_S3_UPLOAD_FOLDER = "item/";
 
     @Transactional
-    public void createItem(ItemCreateDto itemCreate) {
-        Member member = memberRepository.findById(principalHandler.getUserIdFromPrincipal())
+    public void createItem(Long memberId, ItemCreateDto itemCreate) {
+        Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.MEMBER_NOT_FOUND));
 
         Category category = Category.fromKoreanName(itemCreate.category());
 
         TradeType tradeType = TradeType.fromKoreanName(itemCreate.tradeType());
 
-        Item item = Item.builder()
-                .title(itemCreate.title())
-                .tradeType(tradeType)
-                .price(itemCreate.price())
-                .description(itemCreate.description())
-                .registeredLocation(member.getLocation())
-                .address(itemCreate.address())
-                .saleStatus(SaleStatus.FOR_SALE)
-                .category(category)
-                .member(member)
-                .build();
+        try{
+            Item item = Item.builder()
+                    .title(itemCreate.title())
+                    .tradeType(tradeType)
+                    .price(itemCreate.price())
+                    .description(itemCreate.description())
+                    .registeredLocation(member.getLocation())
+                    .address(itemCreate.address())
+                    .saleStatus(SaleStatus.FOR_SALE)
+                    .category(category)
+                    .imageUrl(s3Service.uploadImage(ITEM_S3_UPLOAD_FOLDER, itemCreate.image()))
+                    .member(member)
+                    .build();
 
-        itemRepository.save(item);
+            itemRepository.save(item);
+        } catch (RuntimeException | IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     @Transactional(readOnly = true)
@@ -63,4 +74,19 @@ public class ItemService {
     }
 
 
+    public void deleteItem(Long memberId, Long itemId) {
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.ITEM_NOT_FOUND));
+
+        if(!memberId.equals(item.getMember().getId())) {
+            throw new ForbiddenException(ErrorMessage.FORBIDDEN_MEMBER_ACCESS);
+        }
+
+        try{
+            s3Service.deleteImage(item.getImageUrl());
+            itemRepository.delete(item);
+        } catch (RuntimeException | IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }
