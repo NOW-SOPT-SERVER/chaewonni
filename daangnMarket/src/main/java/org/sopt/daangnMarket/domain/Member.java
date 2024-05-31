@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -42,16 +45,9 @@ public class Member {
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Location location; //사용자가 인증한 현재 동네
 
-    // 정적 팩토리 메서드
-//    public static Member create(String username, String password, String nickname, String phoneNumber, Location location) {
-//        Member member = new Member();
-//        member.username = username;
-//        member.password = password;
-//        member.role = "ROLE_ADMIN";
-//        member.nickname = nickname;
-//        member.phoneNumber = phoneNumber;
-//        member.location = location;
-//        member.mannerTemperature = 36.5;
-//        return member;
-//    }
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Item> items = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Bookmark> bookmarks = new ArrayList<>();
 }

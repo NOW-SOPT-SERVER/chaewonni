@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -21,4 +24,10 @@ public class Location {
 
     @Column(nullable = false)
     private String street; //동
+
+    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
+    private List<Member> members = new ArrayList<>();
+
+    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
+    private List<Item> items = new ArrayList<>();
 }

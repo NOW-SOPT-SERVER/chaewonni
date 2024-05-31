@@ -11,6 +11,9 @@ import org.sopt.daangnMarket.domain.enums.Category;
 import org.sopt.daangnMarket.domain.enums.TradeType;
 import org.sopt.daangnMarket.domain.enums.SaleStatus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -59,6 +62,9 @@ public class Item {
     @JoinColumn(name = "location_id")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Location registeredLocation; //상품이 등록된 위치
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    private List<Bookmark> bookmarks = new ArrayList<>();
 
     public void addBookmarkCount() {
         this.bookmarkCount ++;
