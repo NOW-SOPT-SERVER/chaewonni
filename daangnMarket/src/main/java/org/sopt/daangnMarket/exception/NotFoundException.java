@@ -4,13 +4,9 @@ import lombok.Getter;
 import org.sopt.daangnMarket.util.dto.ErrorMessage;
 
 @Getter
-public class NotFoundException extends RuntimeException {
-
-    private final ErrorMessage errorMessage;
+public class NotFoundException extends DaangnException {
 
     public NotFoundException(ErrorMessage errorMessage) {
-        super(errorMessage.getMessage());
-        this.errorMessage = errorMessage;
+        super(errorMessage);
     }
-
 }
