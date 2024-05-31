@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.sopt.daangnMarket.common.auth.UserAuthentication;
 import org.sopt.daangnMarket.common.auth.redis.domain.Token;
 import org.sopt.daangnMarket.common.auth.redis.repository.TokenRepository;
-import org.sopt.daangnMarket.common.dto.CustomUserDetails;
+import org.sopt.daangnMarket.common.auth.dto.CustomUserDetails;
 import org.sopt.daangnMarket.common.jwt.JwtTokenProvider;
 import org.sopt.daangnMarket.common.jwt.JwtValidationType;
 import org.sopt.daangnMarket.domain.Member;

@@ -1,4 +1,4 @@
-package org.sopt.daangnMarket.common.service;
+package org.sopt.daangnMarket.common.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import org.sopt.daangnMarket.common.auth.UserAuthentication;

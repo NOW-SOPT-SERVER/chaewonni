@@ -1,6 +1,6 @@
 package org.sopt.daangnMarket.common.auth;
 
-import org.sopt.daangnMarket.common.dto.CustomUserDetails;
+import org.sopt.daangnMarket.common.auth.dto.CustomUserDetails;
 import org.sopt.daangnMarket.exception.UnauthorizedException;
 import org.sopt.daangnMarket.util.dto.ErrorMessage;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -1,6 +1,6 @@
 package org.sopt.daangnMarket.common.auth;
 
-import org.sopt.daangnMarket.common.dto.CustomUserDetails;
+import org.sopt.daangnMarket.common.auth.dto.CustomUserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 

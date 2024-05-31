@@ -1,7 +1,7 @@
-package org.sopt.daangnMarket.common.service;
+package org.sopt.daangnMarket.common.auth.service;
 
 import lombok.RequiredArgsConstructor;
-import org.sopt.daangnMarket.common.dto.CustomUserDetails;
+import org.sopt.daangnMarket.common.auth.dto.CustomUserDetails;
 import org.sopt.daangnMarket.domain.Member;
 import org.sopt.daangnMarket.repository.MemberRepository;
 import org.springframework.security.core.userdetails.UserDetails;

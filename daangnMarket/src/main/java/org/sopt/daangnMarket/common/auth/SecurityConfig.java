@@ -6,7 +6,7 @@ import org.sopt.daangnMarket.common.auth.filter.CustomJwtAuthenticationEntryPoin
 import org.sopt.daangnMarket.common.auth.filter.JwtAuthenticationFilter;
 import org.sopt.daangnMarket.common.auth.filter.LoginFilter;
 import org.sopt.daangnMarket.common.jwt.JwtTokenProvider;
-import org.sopt.daangnMarket.common.service.AuthenticationService;
+import org.sopt.daangnMarket.common.auth.service.AuthenticationService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

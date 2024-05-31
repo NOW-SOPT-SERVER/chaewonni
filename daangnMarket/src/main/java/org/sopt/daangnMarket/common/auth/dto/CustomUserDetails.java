@@ -1,4 +1,4 @@
-package org.sopt.daangnMarket.common.dto;
+package org.sopt.daangnMarket.common.auth.dto;
 
 import lombok.RequiredArgsConstructor;
 import org.sopt.daangnMarket.domain.Member;

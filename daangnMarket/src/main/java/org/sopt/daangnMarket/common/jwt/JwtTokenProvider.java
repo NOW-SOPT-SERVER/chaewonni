@@ -2,14 +2,12 @@ package org.sopt.daangnMarket.common.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
-import org.sopt.daangnMarket.common.dto.CustomUserDetails;
+import org.sopt.daangnMarket.common.auth.dto.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 import java.util.Date;
 
