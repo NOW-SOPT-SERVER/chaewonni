@@ -26,12 +26,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
     private final AuthenticationService authenticationService;
-    private final JwtTokenProvider jwtTokenProvider;
 
-    public LoginFilter(AuthenticationManager authenticationManager, AuthenticationService authenticationService, JwtTokenProvider jwtTokenProvider) {
+    public LoginFilter(AuthenticationManager authenticationManager, AuthenticationService authenticationService) {
         this.authenticationManager = authenticationManager;
         this.authenticationService = authenticationService;
-        this.jwtTokenProvider = jwtTokenProvider;
         super.setAuthenticationManager(authenticationManager);
         setFilterProcessesUrl("/api/v1/members/login");  // 추가 설정
     }
