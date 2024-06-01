@@ -3,6 +3,7 @@ package org.sopt.daangnMarket.service;
 import lombok.RequiredArgsConstructor;
 import org.sopt.daangnMarket.domain.Location;
 import org.sopt.daangnMarket.domain.Member;
+import org.sopt.daangnMarket.domain.enums.Role;
 import org.sopt.daangnMarket.dto.request.member.MemberCreateDto;
 import org.sopt.daangnMarket.dto.response.member.MemberFindDto;
 import org.sopt.daangnMarket.util.dto.ErrorMessage;
@@ -32,7 +33,7 @@ public class MemberService {
         Member member = Member.builder()
                 .username(memberCreate.username())
                 .password(bCryptPasswordEncoder.encode(memberCreate.password()))
-                .role("ROLE_USER")
+                .role(Role.ROLE_USER)
                 .nickname(memberCreate.nickname())
                 .phoneNumber(memberCreate.phoneNumber())
                 .mannerTemperature(36.5)
