@@ -3,6 +3,7 @@ package org.sopt.daangnMarket.common.jwt;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.sopt.daangnMarket.common.auth.dto.CustomUserDetails;
+import org.sopt.daangnMarket.domain.enums.Role;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -38,13 +39,14 @@ public class JwtTokenProvider {
                 .get("username", String.class);
     }
 
-    public String getRole(String token) {
-        return Jwts.parserBuilder()
+    public Role getRole(String token) {
+        String roleStr = Jwts.parserBuilder()
                 .setSigningKey(secretKey)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
                 .get("role", String.class);
+        return Role.valueOf(roleStr);
     }
 
     public Boolean isExpired(String token) {

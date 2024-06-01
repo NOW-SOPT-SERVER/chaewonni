@@ -10,6 +10,7 @@ import org.sopt.daangnMarket.common.auth.UserAuthentication;
 import org.sopt.daangnMarket.common.auth.dto.CustomUserDetails;
 import org.sopt.daangnMarket.common.jwt.JwtTokenProvider;
 import org.sopt.daangnMarket.domain.Member;
+import org.sopt.daangnMarket.domain.enums.Role;
 import org.sopt.daangnMarket.exception.UnauthorizedException;
 import org.sopt.daangnMarket.util.dto.ErrorMessage;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,7 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter { // 요청이
                 Long memberId = jwtTokenProvider.getUserFromJwt(token);
 
                 String username = jwtTokenProvider.getUsername(token);
-                String role = jwtTokenProvider.getRole(token);
+                Role role = jwtTokenProvider.getRole(token);
 
                 Member member = Member.builder()
                         .id(memberId)
