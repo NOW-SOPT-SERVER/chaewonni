@@ -19,6 +19,8 @@ import java.util.List;
 @Builder //빌더 패턴 적용
 public class Member {
 
+    public static final double DEFAULT_MANNER_TEMPERATURE = 36.5;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
