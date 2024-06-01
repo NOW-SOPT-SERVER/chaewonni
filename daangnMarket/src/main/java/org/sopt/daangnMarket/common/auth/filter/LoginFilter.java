@@ -59,19 +59,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         //특정한 user 가지고 오기
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 
-//        // UserAuthentication 객체 생성
-//        UserAuthentication userAuthentication = UserAuthentication.createUserAuthentication(customUserDetails);
-
-//        //username을 authentication 객체에서로부터 뽑아옴
-//        String username = customUserDetails.getUsername();
-//
-//        //role을 authentication 객체에서로부터 뽑아옴
-//        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-//        Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
-//        GrantedAuthority auth = iterator.next();
-//
-//        String role = auth.getAuthority();
-
         MemberJoinResponse dto = authenticationService.handleLoginSuccess(customUserDetails);
 
         // Response 준비
