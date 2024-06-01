@@ -59,23 +59,22 @@ public class JwtTokenProvider {
 
 
     // Authentication 객체로 AccessToken 발행
-    public String issueAccessToken(final Authentication authentication) {
-        return generateToken(authentication, ACCESS_TOKEN_EXPIRATION_TIME);
+    public String issueAccessToken(final CustomUserDetails userDetails) {
+        return generateToken(userDetails, ACCESS_TOKEN_EXPIRATION_TIME);
     }
 
-    public String issueRefreshToken(final Authentication authentication) {
-        return generateToken(authentication, REFRESH_TOKEN_EXPIRATION_TIME);
+    public String issueRefreshToken(final CustomUserDetails userDetails) {
+        return generateToken(userDetails, REFRESH_TOKEN_EXPIRATION_TIME);
     }
 
 
-    public String generateToken(Authentication authentication, Long tokenExpirationTime) {
+    public String generateToken(CustomUserDetails userDetails, Long tokenExpirationTime) {
         final Date now = new Date();
         final Claims claims = Jwts.claims()
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + tokenExpirationTime));      // 만료 시간
 
         // Claim에는 token 생성시간과 만료시간, 그리고 사용자 인증 정보가 들어감
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         claims.put(USER_ID, userDetails.getMemberId().toString());
 
         // 헤더 타입을 설정해주는 Header Param, Claim 을 이용한 정보를 대상으로 암호화하여 Jwt 토큰을 만들어 반환

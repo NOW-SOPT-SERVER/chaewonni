@@ -36,10 +36,9 @@ public class RefreshTokenService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.MEMBER_NOT_FOUND));
 
-        CustomUserDetails customUserDetails = new CustomUserDetails(member);
+        CustomUserDetails userDetails = new CustomUserDetails(member);
 
-        UserAuthentication userAuthentication = UserAuthentication.createUserAuthentication(customUserDetails);
-        return ReissueTokenResponse.of(jwtTokenProvider.issueAccessToken(userAuthentication));
+        return ReissueTokenResponse.of(jwtTokenProvider.issueAccessToken(userDetails));
     }
 
     public Long findIdByRefreshToken(String refreshToken) {
