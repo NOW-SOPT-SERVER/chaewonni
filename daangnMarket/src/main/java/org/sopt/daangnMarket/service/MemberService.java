@@ -25,6 +25,8 @@ public class MemberService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    public static final double DEFAULT_MANNER_TEMPERATURE = 36.5;
+
     @Transactional
     public void createMember(MemberCreateDto memberCreate) {
         validateDuplicateMember(memberCreate);
@@ -36,7 +38,7 @@ public class MemberService {
                 .role(Role.ROLE_USER)
                 .nickname(memberCreate.nickname())
                 .phoneNumber(memberCreate.phoneNumber())
-                .mannerTemperature(36.5)
+                .mannerTemperature(DEFAULT_MANNER_TEMPERATURE)
                 .location(location)
                 .build();
 
