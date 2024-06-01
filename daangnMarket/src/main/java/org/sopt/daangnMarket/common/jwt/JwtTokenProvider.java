@@ -29,37 +29,6 @@ public class JwtTokenProvider {
         this.secretKey = getSigningKey();
     }
 
-    //검증을 진행할 3개의 메서드 (토큰의 특정요소 검증)
-    public String getUsername(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(secretKey)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .get("username", String.class);
-    }
-
-    public Role getRole(String token) {
-        String roleStr = Jwts.parserBuilder()
-                .setSigningKey(secretKey)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .get("role", String.class);
-        return Role.valueOf(roleStr);
-    }
-
-    public Boolean isExpired(String token) {
-        Date expiration = Jwts.parserBuilder()
-                .setSigningKey(secretKey)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getExpiration();
-        return expiration.before(new Date());
-    }
-
-
     // Authentication 객체로 AccessToken 발행
     public String issueAccessToken(final CustomUserDetails userDetails) {
         return generateToken(userDetails, ACCESS_TOKEN_EXPIRATION_TIME);

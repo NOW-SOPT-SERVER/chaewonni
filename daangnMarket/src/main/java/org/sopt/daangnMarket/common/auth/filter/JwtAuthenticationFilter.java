@@ -39,14 +39,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter { // 요청이
 
                 Long memberId = jwtTokenProvider.getUserFromJwt(token);
 
-                String username = jwtTokenProvider.getUsername(token);
-                Role role = jwtTokenProvider.getRole(token);
-
                 Member member = Member.builder()
                         .id(memberId)
-                        .username(username)
                         .password("temppassword")
-                        .role(role)
                         .build();
 
                 CustomUserDetails customUserDetails = new CustomUserDetails(member);
