@@ -1,17 +1,18 @@
 package org.sopt.practice.service;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.sopt.practice.common.auth.redis.domain.Token;
 import org.sopt.practice.common.auth.redis.repository.TokenRepository;
+import org.sopt.practice.common.dto.ErrorMessage;
 import org.sopt.practice.common.jwt.JwtTokenProvider;
-import org.sopt.practice.common.auth.UserAuthentication;
 import org.sopt.practice.domain.Member;
+import org.sopt.practice.domain.Role;
+import org.sopt.practice.exception.DuplicateMemberException;
 import org.sopt.practice.repository.MemberRepository;
 import org.sopt.practice.service.dto.MemberCreateDto;
 import org.sopt.practice.service.dto.MemberFindDto;
-import org.sopt.practice.service.dto.UserJoinResponse;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,26 +24,31 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final TokenRepository tokenRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
-    public UserJoinResponse createMember(
-            MemberCreateDto memberCreate
-    ) {
-        Member member = memberRepository.save(
-                Member.create(memberCreate.name(), memberCreate.part(), memberCreate.age())
-        );
-        Long memberId = member.getId();
-        UserAuthentication userAuthentication = UserAuthentication.createUserAuthentication(memberId);
-        String accessToken = jwtTokenProvider.issueAccessToken(
-                userAuthentication
-        );
-        String refreshToken = jwtTokenProvider.issueRefreshToken(
-                userAuthentication
-        );
+    public void createMember(MemberCreateDto memberCreate) {
+        validateDuplicateMember(memberCreate);
 
-        tokenRepository.save(Token.of(memberId, refreshToken));
+        Member member = Member.builder()
+                .username(memberCreate.username())
+                .password(bCryptPasswordEncoder.encode(memberCreate.password()))
+                .role(Role.ROLE_USER)
+                .name(memberCreate.name())
+                .part(memberCreate.part())
+                .age(memberCreate.age())
+                .build();
 
-        return UserJoinResponse.of(accessToken, refreshToken, memberId.toString());
+        memberRepository.save(member);
+    }
+
+    private void validateDuplicateMember(MemberCreateDto memberCreate) {
+        // 아이디(username) 중복 검사
+        boolean existsByUsername = memberRepository.existsByUsername(memberCreate.username());
+        if (existsByUsername) {
+            throw new DuplicateMemberException(ErrorMessage.DUPLICATE_USERNAME);
+        }
+
     }
 
     public Member findById(Long memberId) {

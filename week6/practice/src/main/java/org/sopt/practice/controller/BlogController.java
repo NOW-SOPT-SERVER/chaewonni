@@ -18,16 +18,6 @@ public class BlogController {
 
     private final BlogService blogService;
 
-//    @PostMapping("/blog")
-//    public ResponseEntity<SuccessStatusResponse> createBlog(
-//            @RequestHeader Long memberId,
-//            @RequestBody BlogCreateRequest blogCreateRequest) {
-//        return ResponseEntity.status(HttpStatus.CREATED).header(
-//                        "Location",
-//                        blogService.create(memberId, blogCreateRequest))
-//                .body(SuccessStatusResponse.of(SuccessMessage.BLOG_CREATE_SUCCESS));
-//    }
-
     private final PrincipalHandler principalHandler;
 
     @PostMapping("/blog")
