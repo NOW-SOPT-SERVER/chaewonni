@@ -7,8 +7,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.sopt.practice.common.auth.UserAuthentication;
+import org.sopt.practice.common.auth.dto.CustomUserDetails;
 import org.sopt.practice.common.dto.ErrorMessage;
 import org.sopt.practice.common.jwt.JwtTokenProvider;
+import org.sopt.practice.domain.Member;
 import org.sopt.practice.exception.UnauthorizedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -19,6 +21,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 import static org.sopt.practice.common.jwt.JwtValidationType.VALID_JWT;
+
 // 요청에서 Jwt를 검증하는 커스텀 필터 클래스
 @Component
 @RequiredArgsConstructor
@@ -33,14 +36,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter { // 요청이
         try {
             final String token = getJwtFromRequest(request);
             if (jwtTokenProvider.validateToken(token) == VALID_JWT) {
+
                 Long memberId = jwtTokenProvider.getUserFromJwt(token);
-                UserAuthentication authentication = UserAuthentication.createUserAuthentication(memberId);
+
+                Member member = Member.builder()
+                        .id(memberId)
+                        .password("temppassword")
+                        .build();
+
+                CustomUserDetails customUserDetails = new CustomUserDetails(member);
+
+                UserAuthentication authentication = UserAuthentication.createUserAuthentication(customUserDetails);
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception exception) {
             throw new UnauthorizedException(ErrorMessage.JWT_UNAUTHORIZED_EXCEPTION);
         }
+
         filterChain.doFilter(request, response);
     }
 

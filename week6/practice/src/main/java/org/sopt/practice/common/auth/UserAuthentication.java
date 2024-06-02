@@ -1,5 +1,6 @@
 package org.sopt.practice.common.auth;
 
+import org.sopt.practice.common.auth.dto.CustomUserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -11,7 +12,15 @@ public class UserAuthentication extends UsernamePasswordAuthenticationToken {
         super(principal, credentials, authorities);
     }
 
-    public static UserAuthentication createUserAuthentication(Long userId) {
-        return new UserAuthentication(userId, null, null);
+    public static UserAuthentication createUserAuthentication(CustomUserDetails customUserDetails) {
+        return new UserAuthentication(customUserDetails, null, customUserDetails.getAuthorities());
+    }
+
+    public Long getMemberId() {
+        if (this.getPrincipal() instanceof CustomUserDetails) {
+            CustomUserDetails userDetails = (CustomUserDetails) this.getPrincipal();
+            return userDetails.getMemberId();
+        }
+        return null;  // 적절한 예외 처리를 고려할 수 있음
     }
 }
