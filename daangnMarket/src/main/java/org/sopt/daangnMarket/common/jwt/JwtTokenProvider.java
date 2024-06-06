@@ -67,11 +67,11 @@ public class JwtTokenProvider {
             final Claims claims = getBody(token);
             return JwtValidationType.VALID_JWT;
         } catch (MalformedJwtException ex) {
-            return JwtValidationType.INVALID_JWT_TOKEN;
+            return JwtValidationType.INVALID_JWT;
         } catch (ExpiredJwtException ex) {
-            return JwtValidationType.EXPIRED_JWT_TOKEN;
+            return JwtValidationType.EXPIRED_JWT;
         } catch (UnsupportedJwtException ex) {
-            return JwtValidationType.UNSUPPORTED_JWT_TOKEN;
+            return JwtValidationType.UNSUPPORTED_JWT;
         } catch (IllegalArgumentException ex) {
             return JwtValidationType.EMPTY_JWT;
         }

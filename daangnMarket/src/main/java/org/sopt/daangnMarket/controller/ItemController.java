@@ -42,7 +42,7 @@ public class ItemController {
 
     //등록한 상품 지우기
     @DeleteMapping("/items/{itemId}")
-    public ResponseEntity<ApiResponse<Void>> deleteItems(
+    public ResponseEntity<ApiResponse<Void>> deleteItem(
             @PathVariable(name = "itemId") Long itemId
     ) {
         itemService.deleteItem(principalHandler.getUserIdFromPrincipal(), itemId);

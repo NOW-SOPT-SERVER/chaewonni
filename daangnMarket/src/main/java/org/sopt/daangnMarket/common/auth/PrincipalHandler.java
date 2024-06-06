@@ -13,16 +13,16 @@ public class PrincipalHandler {
 
     public Long getUserIdFromPrincipal() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        isPrincipalNull(principal);
+        validatePrincipal(principal);
 
         if (principal instanceof CustomUserDetails userDetails) {
             return userDetails.getMemberId(); // CustomUserDetails 객체에서 사용자 ID 추출
         } else {
-            throw new IllegalArgumentException("Principal is not an instance of CustomUserDetails");
+            throw new UnauthorizedException(ErrorMessage.JWT_UNAUTHORIZED_EXCEPTION);
         }
     }
 
-    public void isPrincipalNull(final Object principal) {
+    public void validatePrincipal(final Object principal) {
         if (principal == null || principal.toString().equals(ANONYMOUS_USER)) {
             throw new UnauthorizedException(ErrorMessage.JWT_UNAUTHORIZED_EXCEPTION);
         }
