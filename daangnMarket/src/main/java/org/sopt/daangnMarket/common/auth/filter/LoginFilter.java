@@ -57,7 +57,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         //특정한 user 가지고 오기
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 
-        MemberJoinResponse dto = authenticationService.handleLoginSuccess(customUserDetails);
+        MemberJoinResponse dto = authenticationService.login(customUserDetails);
 
         // Response 준비
         response.setContentType("application/json");

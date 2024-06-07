@@ -16,7 +16,7 @@ public class AuthenticationService {
     private final JwtTokenProvider jwtTokenProvider;
     private final TokenRepository tokenRepository;
 
-    public MemberJoinResponse handleLoginSuccess(CustomUserDetails userDetails) {
+    public MemberJoinResponse login(CustomUserDetails userDetails) {
         Long memberId = userDetails.getMemberId();  // memberId 추출
 
         String accessToken = jwtTokenProvider.issueAccessToken(userDetails);
