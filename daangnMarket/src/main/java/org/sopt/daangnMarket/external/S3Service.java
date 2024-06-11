@@ -28,7 +28,8 @@ public class S3Service {
 
 
     public String uploadImage(String directoryPath, MultipartFile image) throws IOException {
-        final String key = directoryPath + generateImageFileName();
+        final String extension = getFileExtension(image.getOriginalFilename());
+        final String key = directoryPath + generateImageFileName(extension);
         final S3Client s3Client = awsConfig.getS3Client();
 
         validateExtension(image);
@@ -56,9 +57,13 @@ public class S3Service {
         );
     }
 
+    private String getFileExtension(String fileName) {
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
+    }
 
-    private String generateImageFileName() {
-        return UUID.randomUUID() + ".jpg";
+
+    private String generateImageFileName(String extension) {
+        return UUID.randomUUID() + "." + extension;
     }
 
 
