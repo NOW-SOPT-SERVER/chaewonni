@@ -1,17 +1,29 @@
 package org.sopt.practice.domain;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder //빌더 패턴 적용
 public class Member {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     private String name;
 
@@ -19,19 +31,4 @@ public class Member {
     private Part part;
 
     private int age;
-
-    @Builder
-    public Member(String name, Part part, int age) {
-        this.name = name;
-        this.part = part;
-        this.age = age;
-    }
-
-    public static Member create(String name, Part part, int age) {
-        return Member.builder()
-                .name(name)
-                .part(part)
-                .age(age)
-                .build();
-    }
 }

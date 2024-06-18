@@ -1,6 +1,8 @@
 package org.sopt.practice.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.sopt.practice.common.dto.SuccessMessage;
+import org.sopt.practice.common.dto.SuccessStatusResponse;
 import org.sopt.practice.service.MemberService;
 import org.sopt.practice.service.dto.MemberCreateDto;
 import org.sopt.practice.service.dto.MemberFindDto;
@@ -19,23 +21,12 @@ public class MemberController {
 
     private final MemberService memberService;
 
-//    @PostMapping
-//    public ResponseEntity createMember(
-//            @RequestBody MemberCreateDto memberCreate
-//    ) {
-//        return ResponseEntity.created(URI.create(memberService.createMember(memberCreate))).build();
-//    }
-
     @PostMapping
-    public ResponseEntity<UserJoinResponse> postMember(
+    public ResponseEntity<SuccessStatusResponse> postMember(
             @RequestBody MemberCreateDto memberCreate
     ) {
-        UserJoinResponse userJoinResponse = memberService.createMember(memberCreate);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .header("Location", userJoinResponse.userId())
-                .body(
-                        userJoinResponse
-                );
+        memberService.createMember(memberCreate);
+        return ResponseEntity.status(HttpStatus.CREATED).body(SuccessStatusResponse.of(SuccessMessage.MEMBER_CREATE_SUCCESS));
     }
 
     @GetMapping("/{memberId}")
