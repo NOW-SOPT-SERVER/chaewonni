@@ -1,19 +1,19 @@
 package org.sopt.daangnMarket.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.sopt.daangnMarket.domain.enums.Category;
 import org.sopt.daangnMarket.domain.enums.TradeType;
 import org.sopt.daangnMarket.domain.enums.SaleStatus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder //빌더 패턴 적용
 public class Item {
@@ -50,6 +50,9 @@ public class Item {
     @Column(nullable = false)
     private int bookmarkCount = 0;
 
+    @Column
+    private String imageUrl;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -59,6 +62,9 @@ public class Item {
     @JoinColumn(name = "location_id")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Location registeredLocation; //상품이 등록된 위치
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    private List<Bookmark> bookmarks = new ArrayList<>();
 
     public void addBookmarkCount() {
         this.bookmarkCount ++;

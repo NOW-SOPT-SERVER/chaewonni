@@ -12,7 +12,8 @@ public record ItemFindAllDto(
         String tradeType,
         int price,
         LocationFindDto registeredLocation,
-        String saleStatus
+        String saleStatus,
+        String imageUrl
 ) {
     public static List<ItemFindAllDto> listOf(List<Item> items) {
         return items
@@ -23,7 +24,8 @@ public record ItemFindAllDto(
                         item.getTradeType().getKoreanName(),
                         item.getPrice(),
                         LocationFindDto.of(item.getRegisteredLocation()),
-                        item.getSaleStatus().getKoreanName()
+                        item.getSaleStatus().getKoreanName(),
+                        item.getImageUrl()
                 )).toList();
     }
 }
